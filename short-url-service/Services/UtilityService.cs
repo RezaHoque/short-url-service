@@ -10,11 +10,11 @@
             GuidString = GuidString.Replace("+", "");
             GuidString = GuidString.Replace("/", "");
 
-            var d = "reza.me/";
+            //var d = "reza.me/";
             Uri uri = new Uri(longUrl);
             string requested = uri.Scheme + Uri.SchemeDelimiter;
 
-            var shortUrl = requested + d + GuidString;
+            var shortUrl = requested + uri.Host +"/s/"+ GuidString;
 
             return shortUrl;
         }
