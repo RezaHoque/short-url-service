@@ -4,7 +4,9 @@ using short_url_service.Services;
 
 namespace short_url_service.Controllers
 {
-    [Route("api/[controller]")]
+   
+    [ApiVersion("1.0")]
+    [Route("api/{v:apiVersion}/[controller]")]
     [ApiController]
     public class UrlManagerController : ControllerBase
     {
