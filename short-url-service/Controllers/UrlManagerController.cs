@@ -17,6 +17,7 @@ namespace short_url_service.Controllers
             _cosmosDbService =InitializeCosmos.InitializeCosmosClientInstanceAsync(_config.GetSection("CosmosDb")).GetAwaiter().GetResult();
             _utilityService = utilityService;
         }
+        [Route("/getshort")]
         [HttpPost]
         public async Task<IActionResult> GetShort(RequestModel model)
         {
@@ -44,7 +45,26 @@ namespace short_url_service.Controllers
                     return Ok(data);
                 }
             }
-            return Ok();
+            return BadRequest();
+        }
+        [Route("/getlong")]
+        [HttpGet]
+        public IActionResult GetLong(string url)
+        {
+            if (!string.IsNullOrEmpty(url))
+            {
+                var items= _cosmosDbService.GetItemsAsync($"SELECT * FROM c WHERE c.shorturl='{url}'").GetAwaiter().GetResult();
+
+                if (items != null)
+                {
+                    return Ok(items);
+                }
+                else
+                {
+                    return Ok("Nothing found");
+                }
+            }
+            return BadRequest();
         }
     }
 }
